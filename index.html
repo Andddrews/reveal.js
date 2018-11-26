@@ -24,8 +24,416 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>Array.prototype and the most commonly used methods</h1>
+					
+				</section>
+				<section>
+					<h2>1. Array.prototype</h2>
+					<h2>2. The most commonly used array methods</h2>
+				</section>
+				<section>
+					<section>
+						<h2>1. Array.prototype</h2>
+						<h3>1.1.  Constructors and classes</h3>
+						<h3>1.2.  Object prototype</h3>
+						<h3>1.3.  Array prototype</h3>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>1.1.  Constructors and classes</h3>
+						<pre><code class="hljs" data-trim contenteditable>
+							function Animal (name, energy) { 
+								this.name = name;  
+								this.energy = energy;
+							}
+							Animal.prototype.eat = function (amount) {  
+								console.log(`${this.name} is eating.`);  
+								this.energy += amount;
+							}
+							Animal.prototype.play = function (length) {  
+								console.log(`${this.name} is playing.`);  
+								this.energy -= length;
+							}
+							const leo = new Animal('Leo', 7);
+							const snoop = new Animal('Snoop', 10);
+							</code></pre>
+					</section>
+					<section>
+							<h3>1.1.  Constructors and classes</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									class Animal {  
+									constructor(name, energy) {    
+										this.name = name;
+										this.energy = energy;
+									}
+									eat(amount) {   
+										console.log(`${this.name} is eating.`);    
+										this.energy += amount;
+									}
+									play(length) {    
+										console.log(`${this.name} is playing.`);    
+										this.energy -= length; 
+									}
+									} 
+									const leo = new Animal('Leo', 7);
+									const snoop = new Animal('Snoop', 10);
+											
+							</code></pre>
+					</section>
+				</section>
+				<section>	
+					<section>
+							<h3>1.2.  Object prototype </h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									let x = {};
+
+									let x = new Object().
+							</code></pre>
+							<p>
+									if  Object  has a prototype property, then <strong>new</strong> operator uses it to set [[Prototype]] for the new object x.
+							</p>
+					</section>
+					<section>
+							<h3>1.2.  Object prototype </h3>
+							<pre><code class="hljs" data-trim contenteditable>
+								Object.getPrototypeOf(x);
+
+								x.__proto__;
+								//{constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, …}
+
+								x.toString(); 
+								// [object Object]
+
+								This prototype chain is only one link long.
+								x -> Object. 
+
+								x.__proto__.__proto__; 
+								// Null
+
+							</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+							<h3>1.3.  Array prototype</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									let y = [];
+
+									Turns out that’s just sugar over creating 
+									a new instance of the Array class.
+
+									let y = new Array().
+
+									y.__proto__;
+									// [constructor: ƒ, concat: ƒ, pop: ƒ, push: ƒ, …]
+
+									y-> Array -> Object.
+
+									y.__proto__.__proto__;
+									// {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, …}
+							</code></pre>
+					</section>
+					<section>
+							<h3>1.3.  Array prototype</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									y.__proto__ === Array.prototype;
+									// true
+									
+									y.__proto__.__proto__ === Object.prototype;
+									// true
+
+									Array.prototype.isPrototypeOf(y);
+									// true
+									
+									Object.prototype.isPrototypeOf(Array);
+									// true
+
+									y instanceof Array;
+									// true
+								</code></pre>
+					</section>
+				</section>
+				</section>
+				<section>
+						<h2>2. The most commonly used array methods</h2>
+						<h3>2.1. Mutator methods</h3>
+						<h3>2.2. Accessor methods</h3>
+						<h3>2.3. Iteration methods</h3>
+				</section>
+				<section>
+					<section>
+							<h3>2.1. Mutator methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.push()
+									
+									let days = ['Sunday', 'Monday', 'Tuesday',
+									'Wednesday', 'Thursday', 'Friday'];
+									days.push('Saturday'); //7
+
+									console.log(days);
+									//["Sunday", "Monday", "Tuesday", "Wednesday",
+									"Thursday", "Friday", "Saturday"];
+								</code></pre>
+					</section>
+					<section>
+							<h3>2.1. Mutator methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.pop()
+
+									let days = ['Sunday', 'Monday', 'Tuesday',
+									'Wednesday', 'Thursday', 'Friday'];
+
+									days.pop(); //Friday
+									console.log(days);
+									//["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"]
+																
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.1. Mutator methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.shift()
+
+									let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 
+									'Thursday', 'Friday'];
+									
+									days.shift(); //Sunday
+									
+									console.log(days); 
+									//[ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+																	
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.1. Mutator methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.unshift()
+
+									let days = ['Sunday', 'Monday', 'Tuesday', 
+									'Wednesday', 'Thursday', 'Friday'];
+
+									days.unshift('Saturday'); //7
+
+									console.log(days); 
+									//["Saturday", "Sunday", "Monday", "Tuesday", 
+									"Wednesday", "Thursday", "Friday"]
+																	
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.1. Mutator methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.sort()
+
+									let numbers = [3,45,5,7,32,56,87,11];
+									
+									numbers.sort(); //[11, 3, 32, 45, 5, 56, 7, 87]
+									
+									console.log(numbers);  //[11, 3, 32, 45, 5, 56, 7, 87]
+																
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.1. Mutator methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.reverse()
+
+									let numbers = [3,45,5,7,32,56,87,11];
+									
+									numbers.reverse(); 
+									//[11, 87, 56, 32, 7, 5, 45, 3]
+																	
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.1. Mutator methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									array.splice(start, deleteCount, item1, item2, ...)
+
+									let days = ['Sunday', 'Monday', 'Tuesday', 
+									'Wednesday', 'Thursday', 'Friday'];
+									
+									days.splice(2,1); //["Tuesday"]
+									console.log(days); 
+									//["Sunday", "Monday", "Wednesday", "Thursday", "Friday“]
+									
+																	
+							</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+							<h3>2.2. Accessor methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.slice() 
+
+									let days = ['Sunday', 'Monday', 'Tuesday', 
+									'Wednesday', 'Thursday', 'Friday'];
+
+									days.slice(2,4);
+									//["Tuesday", "Wednesday"]
+
+									days.slice(3); 
+									//["Wednesday", "Thursday", "Friday"]
+									
+																	
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.2. Accessor methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.concat()
+
+									let week_days = ['Monday', 'Tuesday', 'Wednesday',
+									 'Thursday', 'Friday'];
+
+									let weekend_days = ['Saturday', 'Sunday'];
+
+									week_days.concat(weekend_days); 
+									//["Monday", "Tuesday", "Wednesday", "Thursday", 
+									"Friday", "Saturday", "Sunday"]
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.2. Accessor methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.includes()
+
+									let days = ['Sunday', 'Monday', 'Tuesday', 
+									'Wednesday', 'Thursday', 'Friday'];
+
+									days.includes('Sunday'); 
+									//true
+									days.includes('sunday'); 
+									//false
+
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.2. Accessor methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.indexOf()
+									
+									let days = ['Sunday', 'Monday', 'Tuesday', 
+									'Wednesday', 'Thursday', 'Friday'];
+
+									days.indexOf('Tuesday'); //2
+
+									days.indexOf('Tuesday', 4); //-1
+
+									days.indexOf('March'); //-1
+
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.2. Accessor methods</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.lastIndexOf()
+
+									let days = ['Sunday', 'Monday', 'Tuesday', 
+									'Wednesday', 'Thursday', 'Friday'];
+
+									days.lastIndexOf('Tuesday'); //2
+
+									days.lastIndexOf('Tuesday', 4); //2
+
+									days.lastIndexOf('March'); //-1
+
+							</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+							<h3>2.3. Iteration methods </h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.filter()
+
+									let random_numbers = [2,4,5,6,7,9,34,26,45,39];
+
+									random_numbers.filter(function(element){
+										return element % 2;
+									});
+									//[5, 7, 9, 45, 39]
+
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.3. Iteration methods </h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.find()
+
+									let random_numbers = [2,4,5,6,7,9,34,26,45,39];
+
+									random_numbers.find(function(element){
+										return element > 20;
+									});
+									//34
+
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.3. Iteration methods </h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.forEach()
+
+									let random_numbers = [1,2,4,5,6,7];
+
+									function logArrayElements(element, index, array) {
+										console.log('a[' + index + '] = ' + element); 
+									}
+									random_numbers.forEach(logArrayElements);
+									//a[0] = 1
+									//a[1] = 2
+									//a[2] = 4
+									//a[3] = 5
+									//a[4] = 6
+									//a[5] = 7
+
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.3. Iteration methods </h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									Array.prototype.map()
+
+									let random_numbers = [1,2,4,5,6,7];
+
+									let doubledArray = random_numbers.map(function(element){
+										return element * 2;
+									});
+									console.log(doubledArray); 
+									//[2, 4, 8, 10, 12, 14]
+
+							</code></pre>
+					</section>
+					<section>
+							<h3>2.3. Iteration methods </h3>
+							<pre><code class="hljs" data-trim contenteditable>
+									array.reduce(function(total, currentValue, currentIndex, arr), initialValue);
+									let rockets = [
+									   {country:'Russia', launches:32 },
+									   { country:'US', launches:23 },
+									   { country:'China', launches:16 },
+									   { country:'Europe(ESA)', launches:7 },  
+									   { country:'India', launches:4 },  
+									   { country:'Japan', launches:3 } ];  
+									   let sum = rockets.reduce(function(total, elem) {    
+										   return total + elem.launches; }, 0); 
+									   sum // 85
+
+							</code></pre>
+					</section>
+				</section>
+				<section>
+						<h3>references</h3>
+						<p>https://developer.mozilla.org
+						https://www.digitalocean.com
+						https://tylermcginnis.com
+						https://engineering.headhonchos.com</p>
+				</section>
 			</div>
 		</div>
 
